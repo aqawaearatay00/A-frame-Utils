@@ -5,17 +5,15 @@ AFRAME.registerComponent('size', {
     const tag = this.el.tagName.toLowerCase();
     const raw = this.data.trim();
 
-    // Parse "2 3" or "2,3" → [2, 3]
+    // Parse "2 3", "2,3", or just "2"
     const parts = raw.split(/[\s,]+/).map(Number);
     let x = 1, y = 1, z = 1;
-
     if (parts.length === 1) {
       x = y = z = parts[0];
     } else {
       [x = 1, y = x, z = x] = parts;
     }
 
-    // Apply directly to the geometry component
     const apply = (attrs) => {
       this.el.setAttribute('geometry', {
         ...this.el.getAttribute('geometry'),
@@ -44,8 +42,8 @@ AFRAME.registerComponent('size', {
       case 'a-cone':
         apply({
           primitive: 'cone',
-          'radius-bottom': x * 0.75,
           height: y,
+          'radius-bottom': x * 0.75,
           'radius-top': z * 0.1
         });
         break;
@@ -55,7 +53,7 @@ AFRAME.registerComponent('size', {
         apply({
           primitive: tag.replace('a-', ''),
           radius: x,
-          'radiusTubular': x * 0.2
+          radiusTubular: x * 0.2
         });
         break;
 
@@ -66,8 +64,8 @@ AFRAME.registerComponent('size', {
       case 'a-ring':
         apply({
           primitive: 'ring',
-          'radiusOuter': x,
-          'radiusInner': x * 0.75
+          radiusOuter: x,
+          radiusInner: x * 0.75
         });
         break;
 
