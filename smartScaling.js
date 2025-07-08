@@ -53,7 +53,7 @@ AFRAME.registerComponent('size', {
           radius: x,
           'segments-radial': 48,
           'segments-tubular': 64,
-          'radius-tubular': has(1) ? y : Math.min(x * 0.1, 0.2)
+          'radius-tubular': has(1) ? y : Math.min(x * 0.06, 0.2)
         };
         apply(attrs);
         break;
