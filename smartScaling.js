@@ -53,7 +53,7 @@ AFRAME.registerComponent('size', {
         apply({
           primitive: tag.replace('a-', ''),
           radius: x,
-          'radius-tubular': y || x * 0.2
+          'radius-tubular': y
         });
         break;
 
