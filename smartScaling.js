@@ -48,15 +48,19 @@ AFRAME.registerComponent('size', {
         break;
 
       case 'a-torus':
-      case 'a-torus-knot':
-        apply({
+      case 'a-torus-knot': {
+        const torusAttrs = {
           primitive: tag.replace('a-', ''),
           radius: x,
-          'radius-tubular': typeof y === 'number' && !isNaN(y) ? y : x * 0.2,
           'segments-radial': 48,
           'segments-tubular': 64
-        });
+        };
+        if (parts.length > 1) {
+          torusAttrs['radius-tubular'] = y;
+        }
+        apply(torusAttrs);
         break;
+      }
 
       case 'a-plane':
         apply({ primitive: 'plane', width: x, height: y });
