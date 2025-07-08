@@ -5,7 +5,6 @@ AFRAME.registerComponent('size', {
     const tag = this.el.tagName.toLowerCase();
     const raw = this.data.trim();
 
-    // Parse values like "2", "2 3", or "2,3"
     const parts = raw.split(/[\s,]+/).map(Number);
     let x = 1, y = 1, z = 1;
     if (parts.length === 1) {
@@ -53,7 +52,7 @@ AFRAME.registerComponent('size', {
         apply({
           primitive: tag.replace('a-', ''),
           radius: x,
-          'radius-tubular': y,
+          'radius-tubular': typeof y === 'number' && !isNaN(y) ? y : x * 0.2,
           'segments-radial': 48,
           'segments-tubular': 64
         });
