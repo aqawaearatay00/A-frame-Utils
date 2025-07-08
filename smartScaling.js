@@ -4,18 +4,19 @@ AFRAME.registerComponent('size', {
   update: function () {
     const tag = this.el.tagName.toLowerCase();
     const raw = this.data.trim();
-
     const parts = raw.split(/[\s,]+/).map(Number);
     const has = (i) => typeof parts[i] === 'number' && !isNaN(parts[i]);
+
     const x = has(0) ? parts[0] : 1;
     const y = has(1) ? parts[1] : x;
     const z = has(2) ? parts[2] : x;
 
     const apply = (attrs) => {
-      this.el.setAttribute('geometry', {
+      const geometry = {
         ...this.el.getAttribute('geometry'),
         ...attrs
-      });
+      };
+      this.el.setAttribute('geometry', geometry);
     };
 
     switch (tag) {
@@ -24,11 +25,11 @@ AFRAME.registerComponent('size', {
         break;
 
       case 'a-sphere':
+      case 'a-circle':
       case 'a-dodecahedron':
       case 'a-octahedron':
       case 'a-tetrahedron':
       case 'a-icosahedron':
-      case 'a-circle':
         apply({ primitive: tag.replace('a-', ''), radius: x });
         break;
 
