@@ -1,17 +1,15 @@
 AFRAME.registerComponent('size', {
   schema: { type: 'string' },
 
-  init: function () {
+  update: function () {
     const tag = this.el.tagName.toLowerCase();
     const raw = this.data.trim();
 
     const parts = raw.split(/[\s,]+/).map(Number);
-    let x = 1, y = 1, z = 1;
-    if (parts.length === 1) {
-      x = y = z = parts[0];
-    } else {
-      [x = 1, y = x, z = x] = parts;
-    }
+    const has = (i) => typeof parts[i] === 'number' && !isNaN(parts[i]);
+    const x = has(0) ? parts[0] : 1;
+    const y = has(1) ? parts[1] : x;
+    const z = has(2) ? parts[2] : x;
 
     const apply = (attrs) => {
       this.el.setAttribute('geometry', {
@@ -49,16 +47,16 @@ AFRAME.registerComponent('size', {
 
       case 'a-torus':
       case 'a-torus-knot': {
-        const torusAttrs = {
+        const attrs = {
           primitive: tag.replace('a-', ''),
           radius: x,
           'segments-radial': 48,
           'segments-tubular': 64
         };
-        if (parts.length > 1) {
-          torusAttrs['radius-tubular'] = y;
+        if (has(1)) {
+          attrs['radius-tubular'] = y;
         }
-        apply(torusAttrs);
+        apply(attrs);
         break;
       }
 
